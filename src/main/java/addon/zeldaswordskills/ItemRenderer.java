@@ -38,6 +38,15 @@ public class ItemRenderer
 	    reg(AddonItems.greenToonChest);
 	    reg(AddonItems.greenToonLegs);
 	    reg(AddonItems.greenToonHelmet);
+	    reg(AddonItems.blueToonChest);
+	    reg(AddonItems.blueToonLegs);
+	    reg(AddonItems.blueToonHelmet);
+	    reg(AddonItems.redToonChest);
+	    reg(AddonItems.redToonLegs);
+	    reg(AddonItems.redToonHelmet);
+	    reg(AddonItems.purpleToonChest);
+	    reg(AddonItems.purpleToonLegs);
+	    reg(AddonItems.purpleToonHelmet);
 	    reg(AddonItems.hourSand);
 	    reg(AddonItems.metal1);
 	    reg(AddonItems.metal2);
@@ -64,9 +73,9 @@ public class ItemRenderer
 	    reg(AddonItems.shieldWood2);
 	    reg(AddonItems.shieldWood3);
 
-	    regBug(AddonItems.bigBeetle);
-	    regBug(AddonItems.volcanicLadybug);
-	    regBug(AddonItems.smallBeetle);
+	    reg(AddonItems.bigBeetle);
+	    reg(AddonItems.volcanicLadybug);
+	    reg(AddonItems.smallBeetle);
 	    
 	    reg(AddonItems.spawnEggLandOctorok, 0);
 	    reg(AddonItems.spawnEggLandOctorok, 1);
@@ -87,6 +96,8 @@ public class ItemRenderer
 	    reg(AddonItems.toonBoots);
 	    reg(AddonItems.triforce);
 	    reg(AddonItems.triforceShard);
+	    reg(AddonItems.soupFull);
+	    reg(AddonItems.soupHalf);
 
 	    /**reg(AddonItems.swordPicori);
 	    reg(AddonItems.swordBlue);
@@ -119,12 +130,5 @@ public class ItemRenderer
 	    Minecraft.getMinecraft().getRenderItem().getItemModelMesher().
 	    register(Item.getItemFromBlock(block), meta, new ModelResourceLocation
 	    (modid + ":" + block.getUnlocalizedName().substring(9), "inventory"));
-	}
-	
-	public static void regBug(Item item)
-	{
-	    Minecraft.getMinecraft().getRenderItem().getItemModelMesher().
-	    register(item, 0, new ModelResourceLocation
-	    (modid + ":" + item.getUnlocalizedName().substring(13), "inventory"));
 	}
 }

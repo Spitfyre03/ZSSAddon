@@ -52,7 +52,7 @@ public class ZSSAddon
 		}
 	};
     
-	@EventHandler public void preInit(FMLPreInitializationEvent event) { AddonConfig.preInit(event); AddonEntities.preInit(); }
+	@EventHandler public void preInit(FMLPreInitializationEvent event) { AddonConfig.preInit(event); AddonEntities.preInit(); proxy.preInit(); }
 	@EventHandler public void postInit(FMLPostInitializationEvent event) { AddonConfig.postInit(); AddonEntities.postInit(AddonConfig.config); }
 	
     @EventHandler
@@ -63,8 +63,7 @@ public class ZSSAddon
     			+ "");
 		AddonItems.init();
 		//ZSSAddon.registerVillageTrades();
-		proxy.registerRenderers();
-		proxy.registerTabComparators();
+		proxy.init();
 		
 		//What would be the other way to achieve the pure metals?
     	GameRegistry.registerWorldGenerator(new AddonOreGenerator(), 10);

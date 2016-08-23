@@ -2,6 +2,7 @@ package addon.zeldaswordskills.items;
 
 import java.util.List;
 
+import addon.zeldaswordskills.ZSSAddon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
@@ -26,6 +27,17 @@ import zeldaswordskills.util.WorldUtils;
 
 public class ItemZeldaAddon extends Item implements IFairyUpgrade
 {
+	public ItemZeldaAddon()
+	{
+		super();
+	}
+	
+	public ItemZeldaAddon addToTab()
+	{
+		setCreativeTab(ZSSAddon.miscTab);
+		return this;
+	}
+	
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
 	{

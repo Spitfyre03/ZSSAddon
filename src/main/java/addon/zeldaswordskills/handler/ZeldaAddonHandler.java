@@ -1,7 +1,6 @@
 package addon.zeldaswordskills.handler;
 
 import addon.zeldaswordskills.items.AddonItems;
-import addon.zeldaswordskills.items.ItemAddonZeldaShield;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -30,13 +29,27 @@ public class ZeldaAddonHandler
 			EntityPlayer player = (EntityPlayer) event.source.getEntity();
 			EntityVillager villager = (EntityVillager) event.entityLiving;
 			MerchantRecipeList trades = villager.getRecipes(player);
-			if(player.getHeldItem().getItem() != AddonItems.shieldBlue && player.getHeldItem().getItem() instanceof ItemAddonZeldaShield)
+			
+			if(("Gabora").equals(villager.getCustomNameTag()) || ("Zubora").equals(villager.getCustomNameTag()))
 			{
-				if(villager.getProfession() == 3)
+				if(player.getHeldItem().getItem() == ZSSItems.swordKokiri)
 				{
-					MerchantRecipeHelper.addToListWithCheck(trades, new MerchantRecipe(new ItemStack(ZSSItems.swordKokiri, 1), new ItemStack(Items.emerald, 50), new ItemStack(AddonItems.swordRazor)));
-					PlayerUtils.playSound(player, Sounds.VILLAGER_HAGGLE, 1.0F, 1.0F);
-					PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.villager.kokirisword"));
+					if(villager.getProfession() == 3)
+					{
+						MerchantRecipeHelper.addToListWithCheck(trades, new MerchantRecipe(new ItemStack(ZSSItems.swordKokiri, 1), new ItemStack(Items.emerald, 50), new ItemStack(AddonItems.swordRazor)));
+						PlayerUtils.playSound(player, Sounds.VILLAGER_HAGGLE, 1.0F, 1.0F);
+						PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.villager.kokirisword"));
+						event.setCanceled(true);
+					}
+				}
+			}
+			if(("Grandma").equals(villager.getCustomNameTag()) || ("Grannie").equals(villager.getCustomNameTag()) || ("Grandmother").equals(villager.getCustomNameTag()) || ("Gran").equals(villager.getCustomNameTag()))
+			{
+				if(player.getHeldItem().getItem() == Items.glass_bottle)
+				{
+					player.inventory.consumeInventoryItem(Items.glass_bottle);
+					player.inventory.addItemStackToInventory(new ItemStack(AddonItems.soupFull));
+					PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.grandma.soup"));
 					event.setCanceled(true);
 				}
 			}

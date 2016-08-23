@@ -4,13 +4,13 @@ import net.minecraft.client.model.ModelBiped;
 
 public class AddonCommonProxy
 {
+	public void preInit() {}
+	public void init() {}
+	
 	public ModelBiped getArmorModel(int id)
 	{
 		return null;
 	}
-
-    public void registerRenderers(){}
-    public void registerTabComparators(){}
 }
 
-//Nobody likes the common proxy xD
+//The common proxy is kinda... Empty?

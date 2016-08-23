@@ -6,6 +6,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -69,8 +70,9 @@ public class ItemZeldaGoddessSword extends ItemZeldaSword
 					changeSwords(stack, player);
 					player.getCurrentEquippedItem().setTagCompound(tag);
 					world.playSoundAtEntity(player, Sounds.FLAME_ABSORB, 1.0F, 1.0F);
-					PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocalFormatted("chat.zss.sacred_flame.new",
-					getItemStackDisplayName(player.inventory.getCurrentItem()), StatCollector.translateToLocal("misc.zss.sacred_flame.name." + type)));
+					PlayerUtils.sendTranslatedChat(player, "chat.zss.sacred_flame.new",
+							new ChatComponentTranslation(stack.getUnlocalizedName() + ".name"),
+							new ChatComponentTranslation("tile.zss.sacred_flame." + type.getName() + ".name"));
 					addSacredFlameEnchantments(player.inventory.getCurrentItem(), type);
 					
 					return true;

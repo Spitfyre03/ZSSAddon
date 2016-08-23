@@ -1,4 +1,4 @@
-forge.client.shutdown.internal=Shutting down...
+//The Lang File?
 
 itemGroup.combatTab=ZSS Addon - Combat
 itemGroup.miscTab=ZSS Addon - Misc
@@ -19,12 +19,12 @@ item.zss.bug_net.name=Small Bug Net
 tooltip.zss.bug_net.desc.0=A net used to catch bugs ^.^
 item.zss.bigbug_net.name=Big Bug Net
 tooltip.zss.bigbug_net.desc.0=An upgraded version of the Bug Net.
-item.zss.bug.small_beetle.name=Small Beetle
-tooltip.zss.bug.small_beetle.desc.0=Can be sold for money. Lives in the Jungle.
-item.zss.bug.big_beetle.name=Big Beetle
-tooltip.zss.bug.big_beetle.desc.0=Can be sold for money. Lives in the Jungle.
-item.zss.bug.volcanic_ladybug.name=Volcanic Ladybug
-tooltip.zss.bug.volcanic_ladybug.desc.0=Can be sold for money. Lives in the Nether.
+item.zss.small_beetle.name=Small Beetle
+tooltip.zss.small_beetle.desc.0=Can be sold for money. Lives in the Jungle.
+item.zss.big_beetle.name=Big Beetle
+tooltip.zss.big_beetle.desc.0=Can be sold for money. Lives in the Jungle.
+item.zss.volcanic_ladybug.name=Volcanic Ladybug
+tooltip.zss.volcanic_ladybug.desc.0=Can be sold for money. Lives in the Nether.
 entity.zssaddon.bigBeetle.name=Big Beetle
 entity.zeldaswordskills.bigBeetle.name=Big Beetle
 entity.zssaddon.smallBeetle.name=Small Beetle
@@ -141,7 +141,7 @@ tooltip.zss.hoursand.desc.0=Can protect you from curses, if used right
 tile.zss.metal1ore.name=Crimsonine Ore
 tile.zss.metal2ore.name=Azurine Ore
 tile.zss.metal3ore.name=Aquanine Ore
-tile.zss.phantomblock.name=Phantom Block
+tile.zss.phantomBlock.name=Phantom Block
 
 item.zss.green_toon_helmet.name=Green Toon Hat
 item.zss.green_toon_chest.name=Green Toon Tunic

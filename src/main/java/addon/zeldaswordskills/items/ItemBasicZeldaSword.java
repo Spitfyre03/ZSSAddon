@@ -94,16 +94,6 @@ public class ItemBasicZeldaSword extends ItemZeldaSword
 							}
 						}
 					}
-					
-				//I forgot that this is inside the ItemBasicZeldaSword class...
-				//I will have to add the GrandmaNPC
-					
-					/**else if(this == Items.glass_bottle)
-					{
-					player.inventory.consumeInventoryItem(this);
-					player.inventory.addItemStackToInventory(new ItemStack(ZSSItems.potionBlue));
-					PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.grandma.soup"));
-					}*/
 				}
 				if(("Oshus").equals(villager.getCustomNameTag()) || ("Ocean King").equals(villager.getCustomNameTag()))
 				{

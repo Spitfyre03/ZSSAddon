@@ -1,5 +1,7 @@
 package addon.zeldaswordskills;
 
+import java.lang.reflect.Field;
+
 import addon.zeldaswordskills.entity.EntityCucco;
 import addon.zeldaswordskills.entity.EntityCuccoAngry;
 import addon.zeldaswordskills.entity.EntityCuccoGolden;
@@ -19,7 +21,10 @@ import addon.zeldaswordskills.renderer.bugs.RenderVolcanicLadybug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import zeldaswordskills.ZSSMain;
+import zeldaswordskills.item.IModItem;
 
 public class AddonClientProxy extends AddonCommonProxy
 {
@@ -29,6 +34,19 @@ public class AddonClientProxy extends AddonCommonProxy
 	/**
 	private static final ModelBiped tightArmor = new ModelBiped(0.1f);
 	 */
+	
+	@Override
+	public void preInit()
+	{
+		super.preInit();
+		registerVariants();
+	}
+	
+	@Override
+	public void init()
+	{
+		registerRenderers();
+	}
 	
 	@Override
 	public ModelBiped getArmorModel(int id)
@@ -50,7 +68,6 @@ public class AddonClientProxy extends AddonCommonProxy
 		}
 	}
 	
-	@Override
 	public void registerRenderers()
     {
 		//These needs to be rendered.
@@ -74,9 +91,20 @@ public class AddonClientProxy extends AddonCommonProxy
     	RenderingRegistry.registerEntityRenderingHandler(EntityCuccoGolden.class, new RenderCucco(renderMngr));
      }
 	
-	@Override
-	public void registerTabComparators()
+	private void registerVariants()
 	{
-    	AddonItems.registerTabComparators();
+		try {
+			for (Field f: AddonItems.class.getFields()) {
+				if (Item.class.isAssignableFrom(f.getType())) {
+					Item item = (Item) f.get(null);
+					if (item instanceof IModItem) {
+						((IModItem) item).registerVariants();
+					}
+				}
+			}
+		} catch(Exception e) {
+			ZSSMain.logger.warn("Caught exception while registering item variants: " + e.toString());
+			e.printStackTrace();
+		}
 	}
 }

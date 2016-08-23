@@ -49,12 +49,10 @@ public class ItemSoup extends ItemZeldaAddon
         return EnumAction.DRINK;
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
-        if (playerIn.canEat(false))
-        {
-            playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
-        }
+        playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
 
         return itemStackIn;
     }
@@ -63,8 +61,6 @@ public class ItemSoup extends ItemZeldaAddon
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced)
 	{
-		list.add(StatCollector.translateToLocal(getUnlocalizedName() + ".desc"));
-		list.add("");
-		list.add(EnumChatFormatting.BLUE + "+" + EnumChatFormatting.OBFUSCATED + "20 Health Points");
+		list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.0"));
 	}
 }
