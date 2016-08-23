@@ -1,0 +1,16 @@
+[
+{
+  "modid": "zssaddon",
+  "name": "Zelda Sword Skills - Addon",
+  "description": "This is a ZeldaSwordSkills Addon, which adds some items ZSS didn't.",
+  "version": "1.8-beta-0.1",
+  "mcversion": "1.8",
+  "url": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2278345-zelda-sword-skills-addon",
+  "updateUrl": "",
+  "authorList": ["TheRedMajora"],
+  "credits": "coolAlias, creator of ZeldaSwordSkills.",
+  "logoFile": "zssa_logo.png",
+  "screenshots": [],
+  "requiredMods": ["zeldaswordskills"]
+}
+]

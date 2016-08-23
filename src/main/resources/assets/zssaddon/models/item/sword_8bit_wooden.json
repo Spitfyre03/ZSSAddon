@@ -1,0 +1,18 @@
+{
+    "parent":"builtin/generated",
+	"textures": {
+        "layer0": "zssaddon:items/sword_8bit_wooden"
+    },
+    "display": {
+        "thirdperson": {
+			"rotation": [ 0, 86, 266 ],
+			"translation": [ -0.25, 0.25, -4.25 ],
+			"scale": [ 1.00, 1.00, 1.00 ]
+		},
+		"firstperson": {
+			"rotation": [ 358, 244, 356 ],
+			"translation": [ 0.75, 5.50, 1.00 ],
+			"scale": [ 1.75, 1.75, 2.00 ]
+		}
+    }
+}

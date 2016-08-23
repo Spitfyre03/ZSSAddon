@@ -1,0 +1,6 @@
+{
+    "parent": "zssaddon:item/mainBasic",
+    "textures": {
+        "layer0": "zssaddon:items/toon_tunic_boots"
+    }
+}

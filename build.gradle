@@ -1,0 +1,75 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+version = "v0.1b-m1.8"
+group= "com.theredmajora.zssaddon" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "zeldaswordskillsaddon"
+
+sourceCompatibility = targetCompatibility = "1.7"
+
+dependencies {
+	compile files (
+		"lib/1.8-zeldaswordskills-3.2-deobf.jar",
+		"eclipse/mods/1.8-Battlegear-Bin-1.0.10.1.jar"
+	)
+}
+
+minecraft {
+    version = "1.8-11.14.3.1464"
+    runDir = "eclipse"
+    mappings = "snapshot_20150617"
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+tasks.build.dependsOn('sourceJar', 'deobfJar')
+
+processResources
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+	
+artifacts {
+	archives deobfJar
+	archives sourceJar
+	archives jar
+	}
+}

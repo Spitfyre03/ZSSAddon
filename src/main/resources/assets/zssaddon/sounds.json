@@ -1,0 +1,5 @@
+{
+    "cuccoLiving": {"category": "neutral","sounds":["entity/cucco1", "entity/cucco2"]},
+    "cuccoHeld": {"category": "neutral","sounds":["entity/cucco2"]},
+    "cuccoAngry": {"category": "neutral","sounds":["entity/cuccoAngry"]}
+}

@@ -1,0 +1,18 @@
+{
+    "parent":"builtin/generated",
+	"textures": {
+        "layer0": "zssaddon:items/sword_8bit_magical"
+    },
+    "display": {
+        "thirdperson": {
+			"rotation": [ 0, 268, 128 ],
+			"translation": [ 0.00, 0.75, -5.25 ],
+			"scale": [ 1.25, 1.25, 1.00 ]
+		},
+		"firstperson": {
+			"rotation": [ 10, 40, 2 ],
+			"translation": [ 0.50, 6.25, -1.50 ],
+			"scale": [ 1.75, 1.75, 1.00 ]
+		}
+    }
+}
