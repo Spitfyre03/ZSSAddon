@@ -1,4 +1,4 @@
-ZSS Addon!
+ZeldaSwordSkills - Addon!
 ================
 This is a ZeldaSwordSkills Addon, which adds some items ZSS didn't.
 
