@@ -31,9 +31,8 @@ public class AddonClientProxy extends AddonCommonProxy
 	private static final ModelDarknutArmor darknut = new ModelDarknutArmor(1.0f);
 	private static final ModelDarknutArmor darknutThin = new ModelDarknutArmor(0.1f);
 	private static final ModelDarknutArmor darknutHelm = new ModelDarknutArmor(1.1f);
-	/**
-	private static final ModelBiped tightArmor = new ModelBiped(0.1f);
-	 */
+	private static final ModelBiped tightArmor = new ModelBiped(0.4f);
+	private static final ModelBiped tighterArmor = new ModelBiped(0.2f);
 	
 	@Override
 	public void preInit()
@@ -59,10 +58,10 @@ public class AddonClientProxy extends AddonCommonProxy
 				return darknutHelm;
 			case 2:
 				return darknutThin;
-				/**
 			case 3:
 				return tightArmor;
-				 */
+			case 4:
+				return tighterArmor;
 			default:
 				return darknut;
 		}

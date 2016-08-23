@@ -171,23 +171,23 @@ public class AddonItems
 		darknutLegs = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 2).setUnlocalizedName("zss.darknut_legs");
 		darknutBoots = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 3).setUnlocalizedName("zss.darknut_boots");
 		
-		greenToonHelmet = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("green_toon_helmet").setCreativeTab(ZSSAddon.combatTab);
-		greenToonChest = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("green_toon_chest").setCreativeTab(ZSSAddon.combatTab);
-		greenToonLegs = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("green_toon_legs").setCreativeTab(ZSSAddon.combatTab);
+		greenToonHelmet = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("green_toon_helmet");
+		greenToonChest = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("green_toon_chest");
+		greenToonLegs = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("green_toon_legs");
 		
-		blueToonHelmet = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("blue_toon_helmet").setCreativeTab(ZSSAddon.combatTab);
-		blueToonChest = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("blue_toon_chest").setCreativeTab(ZSSAddon.combatTab);
-		blueToonLegs = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("blue_toon_legs").setCreativeTab(ZSSAddon.combatTab);
+		blueToonHelmet = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("blue_toon_helmet");
+		blueToonChest = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("blue_toon_chest");
+		blueToonLegs = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("blue_toon_legs");
 
-		redToonHelmet = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("red_toon_helmet").setCreativeTab(ZSSAddon.combatTab);
-		redToonChest = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("red_toon_chest").setCreativeTab(ZSSAddon.combatTab);
-		redToonLegs = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("red_toon_legs").setCreativeTab(ZSSAddon.combatTab);
+		redToonHelmet = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("red_toon_helmet");
+		redToonChest = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("red_toon_chest");
+		redToonLegs = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("red_toon_legs");
 
-		purpleToonHelmet = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("purple_toon_helmet").setCreativeTab(ZSSAddon.combatTab);
-		purpleToonChest = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("purple_toon_chest").setCreativeTab(ZSSAddon.combatTab);
-		purpleToonLegs = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("purple_toon_legs").setCreativeTab(ZSSAddon.combatTab);
+		purpleToonHelmet = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("purple_toon_helmet");
+		purpleToonChest = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("purple_toon_chest");
+		purpleToonLegs = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_LEGS).setUnlocalizedName("purple_toon_legs");
 		
-		toonBoots = new ItemArmorTunic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_BOOTS).setUnlocalizedName("toon_boots").setCreativeTab(ZSSAddon.combatTab);
+		toonBoots = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_BOOTS).setUnlocalizedName("toon_boots");
 		
 		//redLion = new ItemRedLion().setUnlocalizedName("redLion");
 		//sail = new ItemZeldaAddon().setUnlocalizedName("sail").setCreativeTab(CreativeTabs.tabTransport);
