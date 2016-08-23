@@ -50,4 +50,11 @@ public class ItemHeroZeldaShield extends ItemZeldaShield{
 		
 		return true;
 	}
+	
+	@Override
+	public String[] getVariants() {
+		String name = getUnlocalizedName();
+		name = ZSSAddon.ModID + ":" + name.substring(9);
+		return new String[]{name, name + "_using", name + "_back"};
+	}
 }

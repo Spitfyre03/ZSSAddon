@@ -1,5 +1,6 @@
 package addon.zeldaswordskills.items;
 
+import addon.zeldaswordskills.ZSSAddon;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -37,5 +38,12 @@ public class ItemZelda8BitShield extends ItemZeldaShield{
 	public boolean hasFairyUpgrade(ItemStack stack)
 	{
 		return this == AddonItems.eightBitShieldSmall;
+	}
+	
+	@Override
+	public String[] getVariants() {
+		String name = getUnlocalizedName();
+		name = ZSSAddon.ModID + ":" + name.substring(9);
+		return new String[]{name, name + "_using", name + "_back"};
 	}
 }

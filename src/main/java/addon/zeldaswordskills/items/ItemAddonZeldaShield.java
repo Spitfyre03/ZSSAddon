@@ -174,41 +174,9 @@ public class ItemAddonZeldaShield extends ItemZeldaShield
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int ticksRemaining) {
-		return (player.isUsingItem() ? models.get(1) : models.get(0));
-	}
-
-	@Override
 	public String[] getVariants() {
 		String name = getUnlocalizedName();
-		name = ModInfo.ID + ":" + name.substring(9);
+		name = ZSSAddon.ModID + ":" + name.substring(9);
 		return new String[]{name, name + "_using", name + "_back"};
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerRenderers(ItemModelMesher mesher) {
-		String[] resources = getVariants();
-		models = new ArrayList<ModelResourceLocation>(resources.length);
-		for (int i = 0; i < resources.length; ++i) {
-			models.add(new ModelResourceLocation(resources[i], "inventory"));
-		}
-		// Register only the first model as the base resource:
-		mesher.register(this, 0, models.get(0));
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Collection<ModelResourceLocation> getDefaultResources() {
-		String[] variants = getVariants();
-		// Swap both regular and 'using' models
-		return Lists.newArrayList(new ModelResourceLocation(variants[0], "inventory"), new ModelResourceLocation(variants[1], "inventory"));
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Class<? extends IBakedModel> getNewModel() {
-		return ModelItemShield.class;
 	}
 }
