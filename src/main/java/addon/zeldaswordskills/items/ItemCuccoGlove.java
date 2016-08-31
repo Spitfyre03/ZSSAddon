@@ -29,6 +29,7 @@ public class ItemCuccoGlove extends Item
         this.setMaxStackSize(1);
 	}
 	
+	@Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isHeld)
     {
 		Random rand = world.rand;

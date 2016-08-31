@@ -37,10 +37,7 @@ import zeldaswordskills.util.TargetUtils;
 import zeldaswordskills.util.WorldUtils;
 
 public class ItemAddonZeldaShield extends ItemZeldaShield
-{	
-	@SideOnly(Side.CLIENT)
-	private List<ModelResourceLocation> models;
-	
+{
 	public ItemAddonZeldaShield(ToolMaterial toolMaterial, float magicReduction, int recoveryTime, float decayRate, float recoveryRate)
 	{
 		super(toolMaterial, magicReduction, recoveryTime, decayRate, recoveryRate);
@@ -67,7 +64,7 @@ public class ItemAddonZeldaShield extends ItemZeldaShield
 		{
 			EntityVillager villager = (EntityVillager) target;
 			MerchantRecipeList trades = villager.getRecipes(player);
-			if(this != AddonItems.shieldBlue && this instanceof ItemAddonZeldaShield)
+			if(this != AddonItems.shieldBlue && this != AddonItems.shieldFace && this != AddonItems.shieldOrdon && this instanceof ItemAddonZeldaShield)
 			{
 				if(villager.getProfession() == 3)
 				{
@@ -76,6 +73,8 @@ public class ItemAddonZeldaShield extends ItemZeldaShield
 					MerchantRecipeHelper.addToListWithCheck(trades, new MerchantRecipe(new ItemStack(Items.emerald, 64), new ItemStack(Items.emerald, 32 + villager.worldObj.rand.nextInt(32)), new ItemStack(AddonItems.shieldSacred1, 1)));
 					PlayerUtils.playSound(player, Sounds.VILLAGER_HAGGLE, 1.0F, 1.0F);
 					PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.villager.shield"));
+					
+					return false;
 				}
 			}
 		}
@@ -102,7 +101,7 @@ public class ItemAddonZeldaShield extends ItemZeldaShield
 	{
 		list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.0"));
 		
-		if(!(this == AddonItems.shieldBlue))
+		if(!(this == AddonItems.shieldBlue) && !(this == AddonItems.shieldFace) && !(this == AddonItems.shieldOrdon))
 		{
 			list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.1"));
 		}
@@ -164,6 +163,10 @@ public class ItemAddonZeldaShield extends ItemZeldaShield
 	public boolean hasFairyUpgrade(ItemStack stack)
 	{
 		if(this != AddonItems.shieldWood3 || this != AddonItems.shieldSacred3 || this != AddonItems.shieldSteel3)
+		{
+			return true;
+		}
+		else if(this != AddonItems.shieldBlue && this != AddonItems.shieldFace && this != AddonItems.shieldOrdon)
 		{
 			return true;
 		}

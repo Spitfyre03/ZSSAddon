@@ -18,6 +18,7 @@ public class AddonConfig
 	private static boolean cuccoGloveLeap;
 	private static boolean cuccoAngrySpawn;
 	private static boolean phantomBlockKill;
+	private static boolean playerButtonActivation;
 	
 	public static void preInit(FMLPreInitializationEvent event)
 	{
@@ -29,6 +30,7 @@ public class AddonConfig
 		bugNetChances = config.get("General", "Whether catched bugs randomly can escape before being catched.", true).getBoolean(true);
 		achievementLoad = config.get("General", "Whether to load ingame Achievements or not. (WARNING: Might be bugged!)", true).getBoolean(true);
 		basicSwordRecipe = config.get("General", "Whether to enable an alternate recipe for the Basic Sword (Used for Mod Compatability) (Currently does nothing)", false).getBoolean(false);
+		playerButtonActivation = config.get("General", "Wheteher only players should be able to activate the switches.", true).getBoolean(true);
 		
 		cuccoGloveLeap = config.get("General", "Whether the Cucco Glove can 'leap'.", true).getBoolean(true);
 		cuccoAngrySpawn = config.get("General", "Whether to spawn extra Angry Cuccos when enraging a cucco.)", true).getBoolean(true);
@@ -52,4 +54,5 @@ public class AddonConfig
 	public static boolean doesAngryCuccosSpawn() { return cuccoAngrySpawn; }
 	public static boolean doesCuccoGloveLeap() { return cuccoGloveLeap; }
 	public static boolean enableNewBasicSword() { return basicSwordRecipe; }
+	public static boolean doesOnlyPlayerActivate() { return playerButtonActivation; }
 }

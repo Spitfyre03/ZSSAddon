@@ -47,9 +47,28 @@ public class ZeldaAddonHandler
 			{
 				if(player.getHeldItem().getItem() == Items.glass_bottle)
 				{
-					player.inventory.consumeInventoryItem(Items.glass_bottle);
-					player.inventory.addItemStackToInventory(new ItemStack(AddonItems.soupFull));
-					PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.grandma.soup"));
+					if(!(PlayerUtils.hasItem(player, AddonItems.soupFull) || PlayerUtils.hasItem(player, AddonItems.soupHalf)))
+					{
+						if(player.inventory.addItemStackToInventory(new ItemStack(AddonItems.soupFull)))
+						{
+							PlayerUtils.consumeInventoryItem(player, Items.glass_bottle, 1);
+							PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.grandma.soup"));
+						}
+						else if(player.getHeldItem().stackSize == 1)
+						{
+							PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.grandma.soup"));
+							player.setCurrentItemOrArmor(0, new ItemStack(AddonItems.soupFull));
+						}
+						else
+						{
+							PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.grandma.soup.nospace"));
+						}
+					}
+					else
+					{
+						PlayerUtils.sendTranslatedChat(player, StatCollector.translateToLocal("chat.zss.grandma.soup.cheat"));
+					}
+						
 					event.setCanceled(true);
 				}
 			}

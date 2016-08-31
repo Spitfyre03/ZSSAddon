@@ -4,8 +4,10 @@ import java.lang.reflect.Field;
 
 import addon.zeldaswordskills.AddonConfig;
 import addon.zeldaswordskills.ZSSAddon;
+import addon.zeldaswordskills.blocks.BlockSwitch;
 import addon.zeldaswordskills.blocks.BlockZeldaAddon;
 import addon.zeldaswordskills.blocks.BlockZeldaOre;
+import addon.zeldaswordskills.blocks.TileEntitySwitch;
 import addon.zeldaswordskills.entity.EntityLandOctorok;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -24,7 +26,6 @@ import zeldaswordskills.api.item.ZSSItemHelper;
 import zeldaswordskills.block.IVanillaRotation;
 import zeldaswordskills.creativetab.ZSSCreativeTabs;
 import zeldaswordskills.item.ICustomDispenserBehavior;
-import zeldaswordskills.item.ItemArmorTunic;
 import zeldaswordskills.item.ItemCustomVariantEgg;
 import zeldaswordskills.item.ItemTreasure.Treasures;
 import zeldaswordskills.item.ItemZeldaShield;
@@ -72,17 +73,17 @@ public class AddonItems
     swordFierce,
     swordPhantom,
     swordLokomo,
-    swordFour,
+    //swordFour,
     swordGoddess1,
     swordGoddess2,
     swordGoddess3,
     swordBasic,
     swordOshus,
     swordRecruit,
-    swordPicori,
-    swordGreen,
-    swordRed,
-    swordBlue,
+    //swordPicori,
+    //swordGreen,
+    //swordRed,
+    //swordBlue,
     cuccoGlove,
     fairyDust,
     goldDust,
@@ -121,7 +122,10 @@ public class AddonItems
     metal1ore,
     metal2ore,
     metal3ore,
-    phantomBlock;
+    phantomBlock,
+    normalSwitch,
+    blueSwitch,
+    rustedSwitch;
 	
     public static void init()
     {
@@ -133,9 +137,9 @@ public class AddonItems
     
     public static void initItems()
     {	
-    	shieldOrdon = new ItemZeldaShield(ToolMaterial.WOOD, 0.25F, 30, 3F, 5F).setUnlocalizedName("shield_ordon").setCreativeTab(ZSSAddon.combatTab);
+    	shieldOrdon = new ItemAddonZeldaShield(ToolMaterial.WOOD, 0.25F, 30, 3F, 5F).setUnlocalizedName("shield_ordon").setCreativeTab(ZSSAddon.combatTab);
 		shieldHero = new ItemHeroZeldaShield(ToolMaterial.WOOD, 0.25F, 28, 3.5F, 4.5F).setUnlocalizedName("shield_hero");
-		shieldFace = new ItemZeldaShield(ToolMaterial.EMERALD, 0.60F, 24, 4.25F, 3.25F).setUnlocalizedName("shield_face").setCreativeTab(ZSSAddon.combatTab);
+		shieldFace = new ItemAddonZeldaShield(ToolMaterial.EMERALD, 0.60F, 24, 4.25F, 3.25F).setUnlocalizedName("shield_face").setCreativeTab(ZSSAddon.combatTab);
 		shieldBlue = new ItemAddonZeldaShield(ToolMaterial.EMERALD, 0.50F, 26, 4F, 3.5F).setUnlocalizedName("shield_blue");
 		
 		shieldWood1 = new ItemAddonZeldaShield(ToolMaterial.WOOD, 0.25F, 30, 2.8F, 4.8F).setUnlocalizedName("shield_1wood");
@@ -213,6 +217,10 @@ public class AddonItems
 		metal2ore = new BlockZeldaOre().setUnlocalizedName("zss.metal2ore");
 		metal3ore = new BlockZeldaOre().setUnlocalizedName("zss.metal3ore");
 		phantomBlock = new BlockZeldaAddon(true).setUnlocalizedName("zss.phantomBlock");
+
+		normalSwitch = new BlockSwitch(0).setUnlocalizedName("zss.switch_normal");
+		blueSwitch = new BlockSwitch(1).setUnlocalizedName("zss.switch_blue");
+		rustedSwitch = new BlockSwitch(2).setUnlocalizedName("zss.switch_rusted");
 		
 		eightBitSwordWooden = new ItemZelda8BitSword(ToolMaterial.IRON, -1.0F).setNoItemOnBreak().setUnlocalizedName("sword_8bit_wooden").setMaxDamage(128);
 		eightBitSwordWhite = new ItemZelda8BitSword(ToolMaterial.IRON, 1.0F).setNoItemOnBreak().setUnlocalizedName("sword_8bit_white").setMaxDamage(256);
@@ -286,7 +294,14 @@ public class AddonItems
 			e.printStackTrace();
 		}
     	
-    	ZSSItemHelper.addItemForZssCreativeTab(cuccoGlove);
+    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(metal1ore));
+    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(metal2ore));
+    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(metal3ore));
+    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(phantomBlock));
+    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(normalSwitch));
+    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(blueSwitch));
+    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(rustedSwitch));
+    	GameRegistry.registerTileEntity(TileEntitySwitch.class, "tile_entity_switch");
     }
 	
 	public static void registerRecipes()
@@ -306,14 +321,14 @@ public class AddonItems
     	{
         	GameRegistry.addRecipe(new ItemStack(swordBasic, 1), new Object[]{"X  ", " X ", "  O", 'X', Items.iron_ingot, 'O', Items.stick});
     	}
-    	
+   
     	GameRegistry.addShapelessRecipe(new ItemStack(phantomBlade, 1), metal1, metal2, metal3);
     	GameRegistry.addSmelting(metal1ore, new ItemStack(metal1), 100);
     	GameRegistry.addSmelting(metal2ore, new ItemStack(metal2), 100);
     	GameRegistry.addSmelting(metal3ore, new ItemStack(metal3), 100);
     	GameRegistry.addShapelessRecipe(new ItemStack(swordPhantom, 1), swordLokomo);
     	GameRegistry.addShapelessRecipe(new ItemStack(swordLokomo, 1), swordPhantom, spiritEssence);
-	
+
     	GameRegistry.addShapelessRecipe(new ItemStack(blueToonHelmet, 1), greenToonHelmet, new ItemStack(Items.dye, 1, 4));
     	GameRegistry.addShapelessRecipe(new ItemStack(blueToonChest, 1), greenToonChest, new ItemStack(Items.dye, 1, 4));
     	GameRegistry.addShapelessRecipe(new ItemStack(blueToonLegs, 1), greenToonLegs, new ItemStack(Items.dye, 1, 4));

@@ -49,15 +49,15 @@ public class ItemDarknutArmor extends ItemArmor
 			
 			if(type == 1)
 			{
-				armorModel = ZSSAddon.proxy.getArmorModel(0);
+				armorModel = ZSSAddon.proxy.getArmorModel(0, "darknut");
 			}
 			else if(type == 0)
 			{
-				armorModel = ZSSAddon.proxy.getArmorModel(1);
+				armorModel = ZSSAddon.proxy.getArmorModel(1, "darknut");
 			}
 			else
 			{
-				armorModel = ZSSAddon.proxy.getArmorModel(2);
+				armorModel = ZSSAddon.proxy.getArmorModel(2, "darknut");
 			}
 		}
 		

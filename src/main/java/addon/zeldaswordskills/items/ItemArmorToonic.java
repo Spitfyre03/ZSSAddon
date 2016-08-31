@@ -46,11 +46,11 @@ public class ItemArmorToonic extends ItemArmorTunic
 			
 				if(type != 2)
 				{
-					armorModel = ZSSAddon.proxy.getArmorModel(3);
+					armorModel = ZSSAddon.proxy.getArmorModel(3, "toonic");
 				}
 				else
 				{
-					armorModel = ZSSAddon.proxy.getArmorModel(4);
+					armorModel = ZSSAddon.proxy.getArmorModel(4, "toonic");
 				}
 			}
 		

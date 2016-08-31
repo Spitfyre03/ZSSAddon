@@ -1,7 +1,11 @@
 package addon.zeldaswordskills;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
+import com.google.common.collect.Maps;
+
+import addon.zeldaswordskills.blocks.TileEntitySwitch;
 import addon.zeldaswordskills.entity.EntityCucco;
 import addon.zeldaswordskills.entity.EntityCuccoAngry;
 import addon.zeldaswordskills.entity.EntityCuccoGolden;
@@ -15,29 +19,34 @@ import addon.zeldaswordskills.models.ModelDarknutArmor;
 import addon.zeldaswordskills.renderer.RenderCucco;
 import addon.zeldaswordskills.renderer.RenderGoldOctorok;
 import addon.zeldaswordskills.renderer.RenderLandOctorok;
+import addon.zeldaswordskills.renderer.TileEntitySwitchRenderer;
 import addon.zeldaswordskills.renderer.bugs.RenderBigBeetle;
 import addon.zeldaswordskills.renderer.bugs.RenderSmallBeetle;
 import addon.zeldaswordskills.renderer.bugs.RenderVolcanicLadybug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import zeldaswordskills.ZSSMain;
+import zeldaswordskills.client.ISwapModel;
 import zeldaswordskills.item.IModItem;
 
 public class AddonClientProxy extends AddonCommonProxy
 {
-	private static final ModelDarknutArmor darknut = new ModelDarknutArmor(1.0f);
-	private static final ModelDarknutArmor darknutThin = new ModelDarknutArmor(0.1f);
-	private static final ModelDarknutArmor darknutHelm = new ModelDarknutArmor(1.1f);
-	private static final ModelBiped tightArmor = new ModelBiped(0.4f);
-	private static final ModelBiped tighterArmor = new ModelBiped(0.2f);
+	private final Minecraft mc = Minecraft.getMinecraft();
+	/** Stores all models which need to be replaced during {@link ModelBakeEvent} */
+	@SuppressWarnings("deprecation")
+	public static final Map<ModelResourceLocation, Class<? extends net.minecraft.client.resources.model.IBakedModel>> smartModels = Maps.newHashMap();
+	private static ModelDarknutArmor darknut = new ModelDarknutArmor(1.0f);
+	private static ModelBiped tightArmor = new ModelBiped(0.4f);
 	
 	@Override
 	public void preInit()
 	{
-		super.preInit();
 		registerVariants();
 	}
 	
@@ -48,37 +57,33 @@ public class AddonClientProxy extends AddonCommonProxy
 	}
 	
 	@Override
-	public ModelBiped getArmorModel(int id)
+	public ModelBiped getArmorModel(int id, String type)
 	{	
 		switch(id)
 		{
 			case 0:
-				return darknut;
+				darknut = new ModelDarknutArmor(1.0f);
 			case 1:
-				return darknutHelm;
+				darknut = new ModelDarknutArmor(1.1f);
 			case 2:
-				return darknutThin;
+				darknut = new ModelDarknutArmor(0.1f);
 			case 3:
-				return tightArmor;
+				tightArmor = new ModelBiped(0.4f);
 			case 4:
-				return tighterArmor;
+				tightArmor = new ModelBiped(0.2f);
 			default:
-				return darknut;
+				tightArmor = new ModelBiped(0.4f);
 		}
+		
+		if(type == "darknut") return darknut;
+		if(type == "toonic") return tightArmor;
+		return tightArmor;
 	}
 	
 	public void registerRenderers()
     {
-		//These needs to be rendered.
-		ItemRenderer.registerItemRenderer();
-    	/**
-		MinecraftForgeClient.registerItemRenderer(AddonItems.swordFierce, new RenderBigItem(0.75F));
-		MinecraftForgeClient.registerItemRenderer(AddonItems.swordFairy, new RenderBigItem(0.75F));
-		MinecraftForgeClient.registerItemRenderer(AddonItems.swordGilded, new RenderBigItem(0.60F));
-		MinecraftForgeClient.registerItemRenderer(AddonItems.eightBitSwordWooden, new Render8BitSword(true));
-		MinecraftForgeClient.registerItemRenderer(AddonItems.eightBitSwordWhite, new Render8BitSword(true));
-		MinecraftForgeClient.registerItemRenderer(AddonItems.eightBitSwordMagical, new RenderBigItem(0.55F));*/
-    	
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySwitch.class, new TileEntitySwitchRenderer());
+       	
 		RenderManager renderMngr = Minecraft.getMinecraft().getRenderManager();
     	RenderingRegistry.registerEntityRenderingHandler(EntityLandOctorok.class, new RenderLandOctorok(renderMngr));
     	RenderingRegistry.registerEntityRenderingHandler(EntityGoldOctorok.class, new RenderGoldOctorok(renderMngr));
@@ -88,7 +93,38 @@ public class AddonClientProxy extends AddonCommonProxy
     	RenderingRegistry.registerEntityRenderingHandler(EntityCucco.class, new RenderCucco(renderMngr));
     	RenderingRegistry.registerEntityRenderingHandler(EntityCuccoAngry.class, new RenderCucco(renderMngr));
     	RenderingRegistry.registerEntityRenderingHandler(EntityCuccoGolden.class, new RenderCucco(renderMngr));
-     }
+    
+    	try {
+			for (Field f: AddonItems.class.getFields()) {
+				if (Item.class.isAssignableFrom(f.getType())) {
+					Item item = (Item) f.get(null);
+					if (item instanceof IModItem) {
+						((IModItem) item).registerRenderers(mc.getRenderItem().getItemModelMesher());
+					}
+					if (item instanceof ISwapModel) {
+						addModelToSwap((ISwapModel) item);
+					}
+				}
+			}
+		} catch(Exception e) {
+			ZSSMain.logger.warn("Caught exception while registering item renderers: " + e.toString());
+			e.printStackTrace();
+		}
+    }
+	
+	private void addModelToSwap(ISwapModel swap)
+	{
+		for (ModelResourceLocation resource : swap.getDefaultResources()) {
+			if (smartModels.containsKey(resource)) {
+				if (smartModels.get(resource) != swap.getNewModel()) {
+					ZSSMain.logger.warn("Conflicting models for resource " + resource.toString() + ": models=[old: " + smartModels.get(resource).getSimpleName() + ", new: " + swap.getNewModel().getSimpleName());
+				}
+			} else {
+				ZSSMain.logger.debug("Swapping model for " + resource.toString() + " to class " + swap.getNewModel().getSimpleName());
+				smartModels.put(resource, swap.getNewModel());
+			}
+		}
+	}
 	
 	private void registerVariants()
 	{
