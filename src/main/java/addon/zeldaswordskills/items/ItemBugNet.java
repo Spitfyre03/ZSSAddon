@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Random;
 
 import addon.zeldaswordskills.AddonConfig;
+import addon.zeldaswordskills.ZSSAddon;
 import addon.zeldaswordskills.entity.EntityBug;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -19,13 +21,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import zeldaswordskills.api.item.IFairyUpgrade;
 import zeldaswordskills.block.tileentity.TileEntityDungeonCore;
 import zeldaswordskills.entity.passive.EntityFairy;
+import zeldaswordskills.item.BaseModItem;
 import zeldaswordskills.item.ZSSItems;
-import zeldaswordskills.ref.ModInfo;
 import zeldaswordskills.ref.Sounds;
 import zeldaswordskills.util.PlayerUtils;
 import zeldaswordskills.util.WorldUtils;
 
-public class ItemBugNet extends Item implements IFairyUpgrade
+public class ItemBugNet extends BaseModItem implements IFairyUpgrade
 {
 	protected ItemBugNet()
 	{
@@ -239,5 +241,18 @@ public class ItemBugNet extends Item implements IFairyUpgrade
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld)
 	{
 		list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.0"));	
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerRenderers(ItemModelMesher mesher) {
+		String[] variants = getVariants();
+		if (variants == null || variants.length < 1) {
+			String name = getUnlocalizedName();
+			variants = new String[]{ZSSAddon.ModID + ":" + name.substring(name.lastIndexOf(".") + 1)};
+		}
+		for (int i = 0; i < variants.length; ++i) {
+			mesher.register(this, i, new ModelResourceLocation(variants[i], "inventory"));
+		}
 	}
 }

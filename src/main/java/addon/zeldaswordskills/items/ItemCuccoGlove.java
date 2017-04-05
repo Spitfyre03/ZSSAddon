@@ -8,9 +8,10 @@ import addon.zeldaswordskills.AddonConfig;
 import addon.zeldaswordskills.ZSSAddon;
 import addon.zeldaswordskills.entity.EntityCucco;
 import addon.zeldaswordskills.entity.EntityCuccoGolden;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
@@ -19,9 +20,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import zeldaswordskills.ref.ModInfo;
+import zeldaswordskills.item.BaseModItem;
 
-public class ItemCuccoGlove extends Item
+public class ItemCuccoGlove extends BaseModItem
 {
 	protected ItemCuccoGlove()
 	{
@@ -119,5 +120,18 @@ public class ItemCuccoGlove extends Item
 		list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.1"));
 		list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.2"));
 		list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.3"));	
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerRenderers(ItemModelMesher mesher) {
+		String[] variants = getVariants();
+		if (variants == null || variants.length < 1) {
+			String name = getUnlocalizedName();
+			variants = new String[]{ZSSAddon.ModID + ":" + name.substring(name.lastIndexOf(".") + 1)};
+		}
+		for (int i = 0; i < variants.length; ++i) {
+			mesher.register(this, i, new ModelResourceLocation(variants[i], "inventory"));
+		}
 	}
 }

@@ -1,5 +1,7 @@
 package addon.zeldaswordskills.items;
 
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item.ToolMaterial;
@@ -10,6 +12,8 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import zeldaswordskills.block.BlockSacredFlame;
 import zeldaswordskills.item.ItemZeldaSword;
 import zeldaswordskills.item.ZSSItems;
@@ -159,6 +163,19 @@ public class ItemZeldaGoddessSword extends ItemZeldaSword
 		{
 			player.inventory.consumeInventoryItem(this);
 			player.inventory.addItemStackToInventory(new ItemStack(ZSSItems.swordMaster, 1));
+		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerRenderers(ItemModelMesher mesher) {
+		String[] variants = getVariants();
+		if (variants == null || variants.length < 1) {
+			String name = getUnlocalizedName();
+			variants = new String[]{ZSSAddon.ModID + ":" + name.substring(name.lastIndexOf(".") + 1)};
+		}
+		for (int i = 0; i < variants.length; ++i) {
+			mesher.register(this, i, new ModelResourceLocation(variants[i], "inventory"));
 		}
 	}
 }

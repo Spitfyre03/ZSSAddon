@@ -2,11 +2,15 @@ package addon.zeldaswordskills.items;
 
 import addon.zeldaswordskills.AddonConfig;
 import addon.zeldaswordskills.ZSSAddon;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import zeldaswordskills.item.ItemZeldaSword;
 import zeldaswordskills.ref.Sounds;
 import zeldaswordskills.util.PlayerUtils;
@@ -123,4 +127,16 @@ public class ItemBasicZeldaSword extends ItemZeldaSword
 		return damage;
 	}
 	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerRenderers(ItemModelMesher mesher) {
+		String[] variants = getVariants();
+		if (variants == null || variants.length < 1) {
+			String name = getUnlocalizedName();
+			variants = new String[]{ZSSAddon.ModID + ":" + name.substring(name.lastIndexOf(".") + 1)};
+		}
+		for (int i = 0; i < variants.length; ++i) {
+			mesher.register(this, i, new ModelResourceLocation(variants[i], "inventory"));
+		}
+	}
 }

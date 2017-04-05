@@ -4,16 +4,20 @@ import java.util.List;
 
 import addon.zeldaswordskills.ZSSAddon;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-public class ItemDarknutArmor extends ItemArmor
+import zeldaswordskills.item.ItemModArmor;
+public class ItemDarknutArmor extends ItemModArmor
 {
 	public ItemDarknutArmor(ArmorMaterial par2EnumArmorMaterial, int par3, int par4)
 	{
@@ -89,5 +93,18 @@ public class ItemDarknutArmor extends ItemArmor
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld)
 	{
 		list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip." + getUnlocalizedName().substring(5) + ".desc.0"));
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerRenderers(ItemModelMesher mesher) {
+		String[] variants = getVariants();
+		if (variants == null || variants.length < 1) {
+			String name = getUnlocalizedName();
+			variants = new String[]{ZSSAddon.ModID + ":" + name.substring(name.lastIndexOf(".") + 1)};
+		}
+		for (int i = 0; i < variants.length; ++i) {
+			mesher.register(this, i, new ModelResourceLocation(variants[i], "inventory"));
+		}
 	}
 }

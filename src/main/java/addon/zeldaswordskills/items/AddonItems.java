@@ -4,13 +4,17 @@ import java.lang.reflect.Field;
 
 import addon.zeldaswordskills.AddonConfig;
 import addon.zeldaswordskills.ZSSAddon;
+import addon.zeldaswordskills.blocks.BlockCandle;
 import addon.zeldaswordskills.blocks.BlockSwitch;
 import addon.zeldaswordskills.blocks.BlockZeldaAddon;
 import addon.zeldaswordskills.blocks.BlockZeldaOre;
+import addon.zeldaswordskills.blocks.TileEntityCandle;
 import addon.zeldaswordskills.blocks.TileEntitySwitch;
 import addon.zeldaswordskills.entity.EntityLandOctorok;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -28,7 +32,6 @@ import zeldaswordskills.creativetab.ZSSCreativeTabs;
 import zeldaswordskills.item.ICustomDispenserBehavior;
 import zeldaswordskills.item.ItemCustomVariantEgg;
 import zeldaswordskills.item.ItemTreasure.Treasures;
-import zeldaswordskills.item.ItemZeldaShield;
 import zeldaswordskills.item.ItemZeldaSword;
 import zeldaswordskills.item.ZSSItems;
 import zeldaswordskills.util.BlockRotationData;
@@ -109,7 +112,8 @@ public class AddonItems
     swordSupport,
     shieldSupport,
     soupFull,
-    soupHalf;
+    soupHalf,
+    lantern;
     
     //Bugs
     public static Item
@@ -125,7 +129,8 @@ public class AddonItems
     phantomBlock,
     normalSwitch,
     blueSwitch,
-    rustedSwitch;
+    rustedSwitch,
+    candle_block;
 	
     public static void init()
     {
@@ -152,12 +157,12 @@ public class AddonItems
 		shieldSacred2 = new ItemAddonZeldaShield(ToolMaterial.IRON, 0.75F, 23, 4.2F, 3.4F).setUnlocalizedName("shield_2sacred");
 		shieldSacred3 = new ItemAddonZeldaShield(ToolMaterial.IRON, 0.75F, 22, 4.4F, 3.2F).setUnlocalizedName("shield_3sacred");
 		
-		swordGilded = new ItemZeldaSword(ToolMaterial.GOLD, 6.0F).setNoItemOnBreak().setUnlocalizedName("sword_gilded").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
-		swordPhantom = new ItemZeldaSword(ToolMaterial.EMERALD, 7.5F).setMasterSword().setUnlocalizedName("sword_phantom").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
-		swordLokomo = new ItemZeldaSword(ToolMaterial.EMERALD, 7.5F).setMasterSword().setUnlocalizedName("sword_lokomo").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
+		swordGilded = new ItemAddonBasicSword(ToolMaterial.GOLD, 6.0F).setNoItemOnBreak().setUnlocalizedName("sword_gilded").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
+		swordPhantom = new ItemAddonBasicSword(ToolMaterial.EMERALD, 7.5F).setMasterSword().setUnlocalizedName("sword_phantom").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
+		swordLokomo = new ItemAddonBasicSword(ToolMaterial.EMERALD, 7.5F).setMasterSword().setUnlocalizedName("sword_lokomo").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
 		//swordFour = new ItemZeldaSword(ToolMaterial.EMERALD, 8.0F).setMasterSword().setUnlocalizedName("sword_four").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
-		swordFierce = new ItemZeldaSword(ToolMaterial.EMERALD, 9.0F, true).setMasterSword().setUnlocalizedName("sword_fierce").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
-		swordFairy = new ItemZeldaSword(ToolMaterial.EMERALD, 6.5F, true).setNoItemOnBreak().setUnlocalizedName("sword_fairy").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
+		swordFierce = new ItemAddonBasicSword(ToolMaterial.EMERALD, 9.0F, true).setMasterSword().setUnlocalizedName("sword_fierce").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
+		swordFairy = new ItemAddonBasicSword(ToolMaterial.EMERALD, 6.5F, true).setNoItemOnBreak().setUnlocalizedName("sword_fairy").setCreativeTab(ZSSAddon.combatTab).setMaxDamage(0);
 		/**
 		swordPicori = new ItemZeldaSword(ToolMaterial.EMERALD, 6.0F).setMasterSword().setUnlocalizedName("sword_picori").setCreativeTab(ZSSAddon.addonTab).setMaxDamage(0);
 		swordGreen = new ItemZeldaSword(ToolMaterial.EMERALD, 5.5F).setMasterSword().setUnlocalizedName("sword_green").setCreativeTab(ZSSAddon.addonTab).setMaxDamage(0);
@@ -170,10 +175,10 @@ public class AddonItems
 		
 		swordRazor = new ItemAddonZeldaSword(ToolMaterial.IRON, 2.0F).setUnlocalizedName("sword_razor").setMaxDamage(100);
 		
-		darknutHelmet = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 0).setUnlocalizedName("zss.darknut_helmet");
-		darknutChest = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 1).setUnlocalizedName("zss.darknut_chest");
-		darknutLegs = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 2).setUnlocalizedName("zss.darknut_legs");
-		darknutBoots = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 3).setUnlocalizedName("zss.darknut_boots");
+		darknutHelmet = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 0).setUnlocalizedName("darknut_helmet");
+		darknutChest = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 1).setUnlocalizedName("darknut_chest");
+		darknutLegs = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 2).setUnlocalizedName("darknut_legs");
+		darknutBoots = new ItemDarknutArmor(ArmorMaterial.IRON, 4, 3).setUnlocalizedName("darknut_boots");
 		
 		greenToonHelmet = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_HELM).setUnlocalizedName("green_toon_helmet");
 		greenToonChest = new ItemArmorToonic(ZSSMain.proxy.addArmor("tunic"), ArmorIndex.TYPE_CHEST).setUnlocalizedName("green_toon_chest");
@@ -196,31 +201,33 @@ public class AddonItems
 		//redLion = new ItemRedLion().setUnlocalizedName("redLion");
 		//sail = new ItemZeldaAddon().setUnlocalizedName("sail").setCreativeTab(CreativeTabs.tabTransport);
 		
-		soupFull = new ItemSoup().setUnlocalizedName("zss.soup_full");
-		soupHalf = new ItemSoup().setUnlocalizedName("zss.soup_half");
+		soupFull = new ItemSoup().setUnlocalizedName("soup_full");
+		soupHalf = new ItemSoup().setUnlocalizedName("soup_half");
 		
-		fairyDust = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.fairydust");
-		goldDust = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.golddust");
-		fierceFragment = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.fierce_fragment");
-		hourSand = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.hoursand");
+		fairyDust = new ItemZeldaAddon().addToTab().setUnlocalizedName("fairydust");
+		goldDust = new ItemZeldaAddon().addToTab().setUnlocalizedName("golddust");
+		fierceFragment = new ItemZeldaAddon().addToTab().setUnlocalizedName("fierce_fragment");
+		hourSand = new ItemZeldaAddon().addToTab().setUnlocalizedName("hoursand");
 		
-		metal1 = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.metal1");
-		metal2 = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.metal2");
-		metal3 = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.metal3");
+		metal1 = new ItemZeldaAddon().addToTab().setUnlocalizedName("metal1");
+		metal2 = new ItemZeldaAddon().addToTab().setUnlocalizedName("metal2");
+		metal3 = new ItemZeldaAddon().addToTab().setUnlocalizedName("metal3");
 		
-		spiritEssence = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.spirit_essence");
-		phantomBlade = new ItemZeldaAddon().addToTab().setUnlocalizedName("zss.phantom_blade");
-		phantomHourglass = new ItemPhantomHourglass().setUnlocalizedName("zss.phantom_hourglass").setCreativeTab(ZSSAddon.miscTab);
-		phantomHourglassFilled = new ItemPhantomHourglass().setUnlocalizedName("zss.phantom_hourglass_filled").setCreativeTab(ZSSAddon.miscTab);
+		spiritEssence = new ItemZeldaAddon().addToTab().setUnlocalizedName("spirit_essence");
+		phantomBlade = new ItemZeldaAddon().addToTab().setUnlocalizedName("phantom_blade");
+		phantomHourglass = new ItemPhantomHourglass().setUnlocalizedName("phantom_hourglass").setCreativeTab(ZSSAddon.miscTab);
+		phantomHourglassFilled = new ItemPhantomHourglass().setUnlocalizedName("phantom_hourglass_filled").setCreativeTab(ZSSAddon.miscTab);
 		
 		metal1ore = new BlockZeldaOre().setUnlocalizedName("zss.metal1ore");
 		metal2ore = new BlockZeldaOre().setUnlocalizedName("zss.metal2ore");
 		metal3ore = new BlockZeldaOre().setUnlocalizedName("zss.metal3ore");
-		phantomBlock = new BlockZeldaAddon(true).setUnlocalizedName("zss.phantomBlock");
+		phantomBlock = new BlockZeldaAddon(true).setUnlocalizedName("phantomBlock");
 
-		normalSwitch = new BlockSwitch(0).setUnlocalizedName("zss.switch_normal");
+		normalSwitch = new BlockSwitch(0).setUnlocalizedName("switch_normal");
 		blueSwitch = new BlockSwitch(1).setUnlocalizedName("zss.switch_blue");
 		rustedSwitch = new BlockSwitch(2).setUnlocalizedName("zss.switch_rusted");
+		
+		candle_block = new BlockCandle().setUnlocalizedName("zss.candle_block");
 		
 		eightBitSwordWooden = new ItemZelda8BitSword(ToolMaterial.IRON, -1.0F).setNoItemOnBreak().setUnlocalizedName("sword_8bit_wooden").setMaxDamage(128);
 		eightBitSwordWhite = new ItemZelda8BitSword(ToolMaterial.IRON, 1.0F).setNoItemOnBreak().setUnlocalizedName("sword_8bit_white").setMaxDamage(256);
@@ -233,23 +240,23 @@ public class AddonItems
 		eightBitShieldSmall = new ItemZelda8BitShield(ToolMaterial.WOOD, 0.25F, 30, 3F, 5F).setUnlocalizedName("shield_8bit_small").setCreativeTab(ZSSAddon.combatTab);
 		eightBitShieldMagical = new ItemZelda8BitShield(ToolMaterial.WOOD, 0.90F, 26, 4F, 3.5F).setUnlocalizedName("shield_8bit_magical").setCreativeTab(ZSSAddon.combatTab);
     
-		triforce = new ItemZeldaAddon().setUnlocalizedName("zss.triforce");
-		triforceShard = new ItemZeldaAddon().setUnlocalizedName("zss.triforceShard");
+		triforce = new ItemZeldaAddon().setUnlocalizedName("triforce");
+		triforceShard = new ItemZeldaAddon().setUnlocalizedName("triforceShard");
 
 		shieldSupport = new ItemSupportZeldaShield(ToolMaterial.EMERALD, 0.75F, 24, 4F, 4F).setCreativeTab(null).setUnlocalizedName("shield_support");
 		swordSupport = new ItemSupportZeldaSword(ToolMaterial.EMERALD, 8.0F).setMasterSword().setCreativeTab(null).setUnlocalizedName("sword_support").setMaxDamage(0);
 		
 		spawnEggLandOctorok = new ItemCustomVariantEgg(EntityLandOctorok.class, "landOctorok").setCreativeTab(ZSSCreativeTabs.tabEggs).setUnlocalizedName("eggLandOcto");
 
-		bugNet = new ItemBugNet().setUnlocalizedName("zss.bug_net").setCreativeTab(ZSSAddon.bugTab);
-		bigBugNet = new ItemBugNet().setUnlocalizedName("zss.bigbug_net").setCreativeTab(ZSSAddon.bugTab);
+		bugNet = new ItemBugNet().setUnlocalizedName("bug_net").setCreativeTab(ZSSAddon.bugTab);
+		bigBugNet = new ItemBugNet().setUnlocalizedName("bigbug_net").setCreativeTab(ZSSAddon.bugTab);
 
-		cuccoGlove = new ItemCuccoGlove().setUnlocalizedName("zss.cuccoGlove").setCreativeTab(ZSSAddon.miscTab);
+		cuccoGlove = new ItemCuccoGlove().setUnlocalizedName("cuccoGlove").setCreativeTab(ZSSAddon.miscTab);
 
 		//BUGS
-		smallBeetle = new ItemBug().setValue(20).setUnlocalizedName("zss.small_beetle");
-		bigBeetle = new ItemBug().setValue(50).setUnlocalizedName("zss.big_beetle");
-		volcanicLadybug = new ItemBug().setValue(70).setUnlocalizedName("zss.volcanic_ladybug");
+		smallBeetle = new ItemBug().setValue(20).setUnlocalizedName("small_beetle");
+		bigBeetle = new ItemBug().setValue(50).setUnlocalizedName("big_beetle");
+		volcanicLadybug = new ItemBug().setValue(70).setUnlocalizedName("volcanic_ladybug");
     }
     
     public static void registerItems()
@@ -294,14 +301,8 @@ public class AddonItems
 			e.printStackTrace();
 		}
     	
-    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(metal1ore));
-    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(metal2ore));
-    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(metal3ore));
-    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(phantomBlock));
-    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(normalSwitch));
-    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(blueSwitch));
-    	ZSSItemHelper.addItemForZssCreativeTab(Item.getItemFromBlock(rustedSwitch));
     	GameRegistry.registerTileEntity(TileEntitySwitch.class, "tile_entity_switch");
+    	GameRegistry.registerTileEntity(TileEntityCandle.class, "tile_entity_candle");
     }
 	
 	public static void registerRecipes()

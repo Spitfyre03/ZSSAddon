@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import addon.zeldaswordskills.blocks.TileEntitySwitch;
 import addon.zeldaswordskills.entity.EntityCucco;
 import addon.zeldaswordskills.entity.EntityCuccoAngry;
 import addon.zeldaswordskills.entity.EntityCuccoGolden;
@@ -19,20 +18,18 @@ import addon.zeldaswordskills.models.ModelDarknutArmor;
 import addon.zeldaswordskills.renderer.RenderCucco;
 import addon.zeldaswordskills.renderer.RenderGoldOctorok;
 import addon.zeldaswordskills.renderer.RenderLandOctorok;
-import addon.zeldaswordskills.renderer.TileEntitySwitchRenderer;
 import addon.zeldaswordskills.renderer.bugs.RenderBigBeetle;
 import addon.zeldaswordskills.renderer.bugs.RenderSmallBeetle;
 import addon.zeldaswordskills.renderer.bugs.RenderVolcanicLadybug;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import zeldaswordskills.ZSSMain;
-import zeldaswordskills.client.ISwapModel;
 import zeldaswordskills.item.IModItem;
 
 public class AddonClientProxy extends AddonCommonProxy
@@ -82,8 +79,6 @@ public class AddonClientProxy extends AddonCommonProxy
 	
 	public void registerRenderers()
     {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySwitch.class, new TileEntitySwitchRenderer());
-       	
 		RenderManager renderMngr = Minecraft.getMinecraft().getRenderManager();
     	RenderingRegistry.registerEntityRenderingHandler(EntityLandOctorok.class, new RenderLandOctorok(renderMngr));
     	RenderingRegistry.registerEntityRenderingHandler(EntityGoldOctorok.class, new RenderGoldOctorok(renderMngr));
@@ -93,16 +88,13 @@ public class AddonClientProxy extends AddonCommonProxy
     	RenderingRegistry.registerEntityRenderingHandler(EntityCucco.class, new RenderCucco(renderMngr));
     	RenderingRegistry.registerEntityRenderingHandler(EntityCuccoAngry.class, new RenderCucco(renderMngr));
     	RenderingRegistry.registerEntityRenderingHandler(EntityCuccoGolden.class, new RenderCucco(renderMngr));
-    
+    	
     	try {
 			for (Field f: AddonItems.class.getFields()) {
 				if (Item.class.isAssignableFrom(f.getType())) {
 					Item item = (Item) f.get(null);
 					if (item instanceof IModItem) {
-						((IModItem) item).registerRenderers(mc.getRenderItem().getItemModelMesher());
-					}
-					if (item instanceof ISwapModel) {
-						addModelToSwap((ISwapModel) item);
+						((IModItem)item).registerRenderers(mc.getRenderItem().getItemModelMesher());
 					}
 				}
 			}
@@ -110,20 +102,21 @@ public class AddonClientProxy extends AddonCommonProxy
 			ZSSMain.logger.warn("Caught exception while registering item renderers: " + e.toString());
 			e.printStackTrace();
 		}
+    	
+    	reg(AddonItems.blueSwitch);
+    	reg(AddonItems.rustedSwitch);
+    	reg(AddonItems.normalSwitch);
+    	reg(AddonItems.metal1ore);
+    	reg(AddonItems.metal2ore);
+    	reg(AddonItems.metal3ore);
+    	reg(AddonItems.phantomBlock);
+    	reg(AddonItems.candle_block);
     }
 	
-	private void addModelToSwap(ISwapModel swap)
+	private void reg(Block block)
 	{
-		for (ModelResourceLocation resource : swap.getDefaultResources()) {
-			if (smartModels.containsKey(resource)) {
-				if (smartModels.get(resource) != swap.getNewModel()) {
-					ZSSMain.logger.warn("Conflicting models for resource " + resource.toString() + ": models=[old: " + smartModels.get(resource).getSimpleName() + ", new: " + swap.getNewModel().getSimpleName());
-				}
-			} else {
-				ZSSMain.logger.debug("Swapping model for " + resource.toString() + " to class " + swap.getNewModel().getSimpleName());
-				smartModels.put(resource, swap.getNewModel());
-			}
-		}
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	    .register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(ZSSAddon.ModID + ":" + block.getUnlocalizedName().lastIndexOf("."), "inventory"));
 	}
 	
 	private void registerVariants()

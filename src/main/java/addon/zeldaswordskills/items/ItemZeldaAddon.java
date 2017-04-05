@@ -3,11 +3,12 @@ package addon.zeldaswordskills.items;
 import java.util.List;
 
 import addon.zeldaswordskills.ZSSAddon;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -18,14 +19,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import zeldaswordskills.api.item.IFairyUpgrade;
 import zeldaswordskills.block.tileentity.TileEntityDungeonCore;
 import zeldaswordskills.entity.player.ZSSPlayerSkills;
+import zeldaswordskills.item.BaseModItem;
 import zeldaswordskills.item.ZSSItems;
+import zeldaswordskills.ref.ModInfo;
 import zeldaswordskills.ref.Sounds;
 import zeldaswordskills.skills.SkillBase;
 import zeldaswordskills.util.MerchantRecipeHelper;
 import zeldaswordskills.util.PlayerUtils;
 import zeldaswordskills.util.WorldUtils;
 
-public class ItemZeldaAddon extends Item implements IFairyUpgrade
+public class ItemZeldaAddon extends BaseModItem implements IFairyUpgrade
 {
 	public ItemZeldaAddon()
 	{
@@ -137,6 +140,19 @@ public class ItemZeldaAddon extends Item implements IFairyUpgrade
 	public boolean hasFairyUpgrade(ItemStack stack)
 	{
 		return this == AddonItems.fairyDust || this == AddonItems.fierceFragment;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerRenderers(ItemModelMesher mesher) {
+		String[] variants = getVariants();
+		if (variants == null || variants.length < 1) {
+			String name = getUnlocalizedName();
+			variants = new String[]{ZSSAddon.ModID + ":" + name.substring(name.lastIndexOf(".") + 1)};
+		}
+		for (int i = 0; i < variants.length; ++i) {
+			mesher.register(this, i, new ModelResourceLocation(variants[i], "inventory"));
+		}
 	}
 	
 	@Override

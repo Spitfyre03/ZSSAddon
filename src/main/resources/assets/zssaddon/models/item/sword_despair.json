@@ -1,0 +1,6 @@
+{
+    "parent": "zssaddon:item/mainSword",
+    "textures": {
+        "layer0": "zssaddon:items/sword_despair"
+    }
+}

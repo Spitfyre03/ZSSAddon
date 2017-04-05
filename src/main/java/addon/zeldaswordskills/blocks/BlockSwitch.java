@@ -1,12 +1,12 @@
 package addon.zeldaswordskills.blocks;
 
 import addon.zeldaswordskills.ZSSAddon;
+import addon.zeldaswordskills.renderer.TileEntitySwitchRenderer;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -16,11 +16,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import zeldaswordskills.block.ISpecialRenderer;
 import zeldaswordskills.block.ZSSBlocks;
 import zeldaswordskills.item.ZSSItems;
 import zeldaswordskills.util.PlayerUtils;
 
-public class BlockSwitch extends BlockContainer
+public class BlockSwitch extends BlockContainer implements ISpecialRenderer
 {
 	int type;
 	
@@ -126,4 +128,9 @@ public class BlockSwitch extends BlockContainer
     	}
     	else return 0;
     }
+    
+    @Override
+	public void registerSpecialRenderer() {
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySwitch.class, new TileEntitySwitchRenderer());
+	}
 }
